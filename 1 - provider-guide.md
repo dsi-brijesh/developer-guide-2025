@@ -1,50 +1,56 @@
--------------------------------------------------------------------------------------------------------------------------------------------
 
-context.watch<type>() 
-- should be called inside build method.
-- it is used to listen to any changes in provider or change notifier.
-- when notifyListeners() is called, the widgets that using context.watch get's rebuild.
+# 🧠 Flutter Provider: `read` vs `watch` vs `select`
 
-context.read<type>()
-- can be called when just triggering an action.
-- the widget where you call it doesn't need to rebuild, but others might be listening to the context.watch.
+---
 
--------------------------------------------------------------------------------------------------------------------------------------------
+## 🔍 `context.watch<Type>()`
+- ✅ Should be called inside the `build` method.
+- 👂 Listens to changes in the provider (`ChangeNotifier`).
+- 🔄 When `notifyListeners()` is called, widgets using `context.watch` rebuild.
 
-🔁 What happens:
+## 🚀 `context.read<Type>()`
+- ✅ Can be called anywhere (initState, callbacks, etc).
+- ❌ Does **not** listen to changes or rebuild the widget.
+- ☑️ Useful for triggering actions (like `clearHistory()`), not for reacting to state.
 
-In This Widget	What Happens?
+---
 
-You call read().clearHistory()	------------>    🔄 Calls notifyListeners()
-This widget uses read() -------------------->	   ❌ Doesn’t rebuild
-Another widget uses watch() or Consumer	---->    ✅ Rebuilds automatically
+## 🔁 What happens:
 
--------------------------------------------------------------------------------------------------------------------------------------------
+| In This Widget                       | What Happens?                          |
+|--------------------------------------|----------------------------------------|
+| You call `read().clearHistory()`     | 🔄 Calls `notifyListeners()`            |
+| This widget uses `read()`            | ❌ Doesn’t rebuild                      |
+| Another widget uses `watch()`/Consumer | ✅ Rebuilds automatically             |
 
-✅ Summary
+---
 
-Use Case	                              Use read()	         Rebuilds this widget?	   Rebuilds others?
-Call method that updates state ------>    ✅ Yes	                 ❌ No	                ✅ Yes
-Read a changing value to display ---->	  ❌ Use watch()	         ✅ Yes	                   —
+## ✅ Summary
 
--------------------------------------------------------------------------------------------------------------------------------------------
+| Use Case                              | Use `read()` | Rebuilds this widget? | Rebuilds others? |
+|--------------------------------------|--------------|------------------------|------------------|
+| Call method that updates state       | ✅ Yes        | ❌ No                  | ✅ Yes           |
+| Read a changing value to display     | ❌ Use `watch()` | ✅ Yes              | —                |
 
-🧠 Provider V/s Get_It
+---
 
-Use Case	                                     Use context.watch()	     Use serviceLocator
-Rebuild UI on theme/font change	----------->         ✅ Yes	                    ❌ No
-Read once (e.g. in initState)	  ----------->         ✅ Yes (or read())	      ✅ Yes
-Background service / logic	    ----------->         ❌ No	                    ✅ Yes
-Avoid rebuild for performance	  ----------->         ❌ No	                    ✅ Yes
+## 🧠 Provider vs Get_It
 
--------------------------------------------------------------------------------------------------------------------------------------------
+| Use Case                              | Use `context.watch()` | Use `serviceLocator` |
+|--------------------------------------|------------------------|----------------------|
+| Rebuild UI on theme/font change      | ✅ Yes                 | ❌ No                |
+| Read once (e.g. in `initState`)      | ✅ Yes (or `read()`)   | ✅ Yes               |
+| Background service / logic           | ❌ No                  | ✅ Yes               |
+| Avoid rebuild for performance        | ❌ No                  | ✅ Yes               |
 
-🧠 Tip: Difference between read, watch, and select
+---
 
-Method	                               Rebuilds on notifyListeners()?	            		              Best For
+## 🧠 Tip: `read`, `watch`, and `select`
 
-context.watch<T>()     -----------> 	             ✅ Yes					                          Reading reactive values
-context.read<T>()     ------------> 	             ❌ No					                          Calling methods or setting values
-context.select<T, R>() -----------> 	             ✅ Yes (but only for selected field)	  Optimized listening to a single field
+| Method                  | Rebuilds on `notifyListeners()`?         | Best For                            |
+|-------------------------|------------------------------------------|-------------------------------------|
+| `context.watch<T>()`    | ✅ Yes                                   | Reading reactive values             |
+| `context.read<T>()`     | ❌ No                                    | Calling methods / setting values    |
+| `context.select<T, R>()`| ✅ Yes (only for selected field)         | Optimized listening to a single field |
 
--------------------------------------------------------------------------------------------------------------------------------------------
+---
