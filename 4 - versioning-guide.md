@@ -37,3 +37,9 @@ Assuming your last released version was:
 versionCode 22
 versionName "3.2"
 
+For your next release, follow:
+
+defaultConfig {
+    versionCode 23              // Always increment
+    versionName "3.2.1"         // Optional: bump patch for minor fixes
+}
