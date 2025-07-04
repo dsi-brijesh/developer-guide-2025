@@ -8,12 +8,12 @@ This document outlines how and when to update the `versionCode` and `versionName
 
 ### `versionCode`
 - A positive integer used internally by Google Play to identify app versions.
-- **Must increase** with every release—Play Console rejects APK/AAB uploads with duplicate or lower codes :contentReference[oaicite:1]{index=1}.
+- **Must increase** with every release—Play Console rejects APK/AAB uploads with duplicate or lower codes.
 - Doesn’t display to users; internally tracks build chronology.
 
 ### `versionName`
-- A string meant for users, displayed in the Play Store and device settings :contentReference[oaicite:2]{index=2}.
-- Commonly follows **Semantic Versioning**: `MAJOR.MINOR.PATCH` (e.g., `3.2.1`) :contentReference[oaicite:3]{index=3}.
+- A string meant for users, displayed in the Play Store and device settings.
+- Commonly follows **Semantic Versioning**: `MAJOR.MINOR.PATCH` (e.g., `3.2.1`).
 - Optional to update for every release but recommended to reflect visible changes.
 
 ---
@@ -22,7 +22,7 @@ This document outlines how and when to update the `versionCode` and `versionName
 
 | Release Type        | versionCode | versionName          |
 |---------------------|-------------|----------------------|
-| **Every release**   | 👍 Increment by at least 1 :contentReference[oaicite:4]{index=4} | Optional: bump semver to indicate changes |
+| **Every release**   | 👍 Increment by at least 1 | Optional: bump semver to indicate changes |
 | **Patch/update**    | 👍 Increment | Recommended: bump PATCH (e.g., `3.2.0` → `3.2.1`) |
 | **Minor feature**   | 👍 Increment | Recommended: bump MINOR (e.g., `3.2.1` → `3.3.0`) |
 | **Major changes**   | 👍 Increment | Recommended: bump MAJOR (e.g., `3.3.0` → `4.0.0`) |
